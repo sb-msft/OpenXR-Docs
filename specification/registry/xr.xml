@@ -1332,7 +1332,149 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
             <member optional="true"><type>uint32_t</type> <name>nodeCountOutput</name></member>
             <member optional="true" len="nodeCapacityInput"><type>XrControllerModelNodeStateMSFT</type>* <name>nodeStates</name></member>
         </type>
+      
+        <!-- XR_MSFT_remoting -->
+        <type name="XrRemotingDisconnectReasonMSFT" category="enum"/>
+        <type name="XrRemotingConnectionStateMSFT" category="enum"/>
+        <type name="XrRemotingPreferredVideoCodecMSFT" category="enum"/>
+        <type name="XrRemotingCertificateNameMismatchMSFT" category="enum"/>
 
+        <type category="struct" name="XrRemotingRemoteContextPropertiesMSFT">
+            <member values="XR_TYPE_REMOTING_REMOTE_CONTEXT_PROPERTIES_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member><type>void</type>* <name>next</name></member> <!-- Pointer to next structure -->
+            <member><type>uint32_t</type> <name>maxBitrateKbps</name></member>
+            <member><type>XrBool32</type> <name>enableAudio</name></member>
+            <member><type>XrRemotingVideoCodecMSFT</type> <name>videoCodec</name></member>
+        </type>
+        <type category="struct" name="XrRemotingConnectInfoMSFT">
+            <member values="XR_TYPE_REMOTING_CONNECT_INFO_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member><type>void</type>* <name>next</name></member>
+            <member>const <type>char</type>* <name>remoteHostName</name></member>
+            <member><type>uint16_t</type> <name>remotePort</name></member>
+            <member><type>XrBool32</type> <name>secureConnection</name></member>
+        </type>
+        <type category="struct" name="XrRemotingListenInfoMSFT">
+            <member values="XR_TYPE_REMOTING_LISTEN_INFO_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member><type>void</type>* <name>next</name></member>
+            <member>const <type>char</type>* <name>listenInterface</name></member>
+            <member><type>uint16_t</type> <name>handshakeListenPort</name></member>
+            <member><type>uint16_t</type> <name>transportListenPort</name></member>
+            <member><type>XrBool32</type> <name>secureConnection</name></member>
+        </type>
+        <type category="struct" name="XrRemotingDisconnectInfoMSFT">
+            <member values="XR_TYPE_REMOTING_DISCONNECT_INFO_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+        </type>
+        <type category="struct" name="XrRemotingEventDataListeningMSFT">
+            <member values="XR_TYPE_REMOTING_EVENT_DATA_LISTENING_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>uint16_t</type> <name>listeningPort</name></member>
+        </type>
+        <type category="struct" name="XrRemotingEventDataConnectedMSFT">
+            <member values="XR_TYPE_REMOTING_EVENT_DATA_CONNECTED_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+        </type>
+        <type category="struct" name="XrRemotingEventDataDisconnectedMSFT">
+            <member values="XR_TYPE_REMOTING_EVENT_DATA_DISCONNECTED_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>XrRemotingDisconnectReasonMSFT</type> <name>disconnectReason</name></member>
+        </type>
+        <type category="struct" name="XrRemotingAuthenticationTokenRequestMSFT">
+            <member values="XR_TYPE_REMOTING_AUTHENTICATION_TOKEN_REQUEST_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>void</type>* <name>context</name></member>
+            <member><type>uint32_t</type> <name>tokenCapacityIn</name></member>
+            <member><type>uint32_t</type> <name>tokenSizeOut</name></member>
+            <member><type>char</type>* <name>tokenBuffer</name></member>
+        </type>
+        <type category="struct" name="XrRemotingCertificateDataMSFT">
+            <member values="XR_TYPE_REMOTING_CERTIFICATE_DATA_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>uint32_t</type> <name>size</name></member>
+            <member>const <type>uint8_t</type>* <name>data</name></member>
+        </type>
+        <type category="struct" name="XrRemotingCertificateValidationResultMSFT">
+            <member values="XR_TYPE_REMOTING_CERTIFICATE_VALIDATION_RESULT_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>XrBool32</type> <name>trustedRoot</name></member>
+            <member><type>XrBool32</type> <name>revoked</name></member>
+            <member><type>XrBool32</type> <name>expired</name></member>
+            <member><type>XrBool32</type> <name>wrongUsage</name></member>
+            <member><type>XrRemotingCertificateNameMismatchMSFT</type> <name>nameMismatch</name></member>
+            <member><type>XrBool32</type> <name>revocationCheckFailed</name></member>
+            <member><type>XrBool32</type> <name>invalidCertOrChain</name></member>
+        </type>
+        <type category="struct" name="XrRemotingServerCertificateValidationMSFT">
+            <member values="XR_TYPE_REMOTING_SERVER_CERTIFICATE_VALIDATION_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>void</type>* <name>context</name></member>
+            <member>const <type>char</type>* <name>hostName</name></member>
+            <member><type>XrBool32</type> <name>forceRevocationCheck</name></member>
+            <member><type>uint32_t</type> <name>numCertificates</name></member>
+            <member>const <type>XrRemotingCertificateDataMSFT</type>* <name>certificates</name></member>
+            <member><type>XrRemotingCertificateValidationResultMSFT</type>* <name>systemValidationResult</name></member>
+            <member><type>XrRemotingCertificateValidationResultMSFT</type> <name>validationResultOut</name></member>
+        </type>
+        <type category="struct" name="XrRemotingAuthenticationTokenValidationMSFT">
+            <member values="XR_TYPE_REMOTING_AUTHENTICATION_TOKEN_VALIDATION_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>void</type>* <name>context</name></member>
+            <member>const <type>char</type>* <name>token</name></member>
+            <member><type>XrBool32</type> <name>tokenValidOut</name></member>
+        </type>
+        <type category="struct" name="XrRemotingServerCertificateRequestMSFT">
+            <member values="XR_TYPE_REMOTING_SERVER_CERTIFICATE_REQUEST_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>void</type>* <name>context</name></member>
+            <member><type>uint32_t</type> <name>certStoreCapacityIn</name></member>
+            <member><type>uint32_t</type> <name>certStoreSizeOut</name></member>
+            <member><type>uint8_t</type>* <name>certStoreBuffer</name></member>
+            <member><type>uint32_t</type> <name>keyPassphraseCapacityIn</name></member>
+            <member><type>uint32_t</type> <name>keyPassphraseSizeOut</name></member>
+            <member><type>char</type>* <name>keyPassphraseBuffer</name></member>
+            <member><type>uint32_t</type> <name>subjectNameCapacityIn</name></member>
+            <member><type>uint32_t</type> <name>subjectNameSizeOut</name></member>
+            <member><type>char</type>* <name>subjectNameBuffer</name></member>
+        </type>
+        <type category="struct" name="XrRemotingSecureConnectionClientCallbacksMSFT">
+            <member values="XR_TYPE_REMOTING_SECURE_CONNECTION_CLIENT_CALLBACKS_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member><type>void</type>* <name>next</name></member>
+            <member><type>void</type>* <name>context</name></member>
+            <member><type>PFN_xrRemotingRequestAuthenticationTokenCallbackMSFT</type> <name>requestAuthenticationTokenCallback</name></member>
+            <member><type>PFN_xrRemotingValidateServerCertificateCallbackMSFT</type> <name>validateServerCertificateCallback</name></member>
+            <member><type>XrBool32</type> <name>performSystemValidation</name></member>
+        </type>
+        <type category="struct" name="XrRemotingSecureConnectionServerCallbacksMSFT">
+            <member values="XR_TYPE_REMOTING_SECURE_CONNECTION_SERVER_CALLBACKS_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member><type>void</type>* <name>next</name></member>
+            <member><type>void</type>* <name>context</name></member>
+            <member><type>PFN_xrRemotingRequestServerCertificateCallbackMSFT</type> <name>requestServerCertificateCallback</name></member>
+            <member><type>PFN_xrRemotingValidateAuthenticationTokenCallbackMSFT</type> <name>validateAuthenticationTokenCallback</name></member>
+            <member>const <type>char</type>* <name>authenticationRealm</name></member>
+        </type>
+      
+        <!-- XR_MSFT_remoting_frame_mirroring -->
+        <type category="struct" name="XrRemotingFrameMirrorImageBaseHeaderMSFT">
+            <member><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member> <!-- Pointer to next structure -->
+        </type>
+        <type category="struct" name="XrRemotingFrameMirrorImageD3D11MSFT">
+            <member values="XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D11_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>ID3D11Texture2D</type>* <name>texture</name></member>
+        </type>
+        <type category="struct" name="XrRemotingFrameMirrorImageD3D12MSFT">
+            <member values="XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D12_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member><type>ID3D12Resource</type>* <name>texture</name></member>
+            <member><type>D3D12_RESOURCE_STATES</type> <name>stateBefore</name></member>
+            <member><type>D3D12_RESOURCE_STATES</type> <name>stateAfter</name></member>
+        </type>
+        <type category="struct" name="XrRemotingFrameMirrorImageInfoMSFT">
+            <member values="XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_INFO_MSFT"><type>XrStructureType</type> <name>type</name></member>
+            <member>const <type>void</type>* <name>next</name></member>
+            <member>const <type>XrRemotingFrameMirrorImageBaseHeaderMSFT</type>* <name>image</name></member>
+        </type>
     </types>
 
     <!-- SECTION: OpenXR enumerant (token) definitions. -->
@@ -1708,6 +1850,53 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
     <enums name="XrSpatialGraphNodeTypeMSFT" type="enum">
         <enum value="1" name="XR_SPATIAL_GRAPH_NODE_TYPE_STATIC_MSFT" />
         <enum value="2" name="XR_SPATIAL_GRAPH_NODE_TYPE_DYNAMIC_MSFT" />
+    </enums>
+  
+    <!-- XR_MSFT_remoting -->
+    <enums name="XrRemotingDisconnectReasonMSFT" type="enum">
+        <enum value="0" name="XR_REMOTING_DISCONNECT_REASON_NONE_MSFT"/>
+        <enum value="1" name="XR_REMOTING_DISCONNECT_REASON_UNKNOWN_MSFT"/>
+        <enum value="2" name="XR_REMOTING_DISCONNECT_REASON_NO_SERVER_CERTIFICATE_MSFT"/>
+        <enum value="3" name="XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_PORT_BUSY_MSFT"/>
+        <enum value="4" name="XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_UNREACHABLE_MSFT"/>
+        <enum value="5" name="XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_CONNECTION_FAILED_MSFT"/>
+        <enum value="6" name="XR_REMOTING_DISCONNECT_REASON_AUTHENTICATION_FAILED_MSFT"/>
+        <enum value="7" name="XR_REMOTING_DISCONNECT_REASON_REMOTING_VERSION_MISMATCH_MSFT"/>
+        <enum value="8" name="XR_REMOTING_DISCONNECT_REASON_INCOMPATIBLE_TRANSPORT_PROTOCOLS_MSFT"/>
+        <enum value="9" name="XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_FAILED_MSFT"/>
+        <enum value="10" name="XR_REMOTING_DISCONNECT_REASON_TRANSPORT_PORT_BUSY_MSFT"/>
+        <enum value="11" name="XR_REMOTING_DISCONNECT_REASON_TRANSPORT_UNREACHABLE_MSFT"/>
+        <enum value="12" name="XR_REMOTING_DISCONNECT_REASON_TRANSPORT_CONNECTION_FAILED_MSFT"/>
+        <enum value="13" name="XR_REMOTING_DISCONNECT_REASON_PROTOCOL_VERSION_MISMATCH_MSFT"/>
+        <enum value="14" name="XR_REMOTING_DISCONNECT_REASON_PROTOCOL_ERROR_MSFT"/>
+        <enum value="15" name="XR_REMOTING_DISCONNECT_REASON_VIDEO_CODEC_NOT_AVAILABLE_MSFT"/>
+        <enum value="16" name="XR_REMOTING_DISCONNECT_REASON_CANCELED_MSFT"/>
+        <enum value="17" name="XR_REMOTING_DISCONNECT_REASON_CONNECTION_LOST_MSFT"/>
+        <enum value="18" name="XR_REMOTING_DISCONNECT_REASON_DEVICE_LOST_MSFT"/>
+        <enum value="19" name="XR_REMOTING_DISCONNECT_REASON_DISCONNECT_REQUEST_MSFT"/>
+        <enum value="20" name="XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_NETWORK_UNREACHABLE_MSFT"/>
+        <enum value="21" name="XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_CONNECTION_REFUSED_MSFT"/>
+        <enum value="22" name="XR_REMOTING_DISCONNECT_REASON_VIDEO_FORMAT_NOT_AVAILABLE_MSFT"/>
+        <enum value="23" name="XR_REMOTING_DISCONNECT_REASON_PEER_DISCONNECT_REQUEST_MSFT"/>
+        <enum value="24" name="XR_REMOTING_DISCONNECT_REASON_PEER_DISCONNECT_TIMEOUT_MSFT"/>
+        <enum value="25" name="XR_REMOTING_DISCONNECT_REASON_SESSION_OPEN_TIMEOUT_MSFT"/>
+        <enum value="26" name="XR_REMOTING_DISCONNECT_REASON_REMOTING_HANDSHAKE_TIMEOUT_MSFT"/>
+        <enum value="27" name="XR_REMOTING_DISCONNECT_REASON_INTERNAL_ERROR_MSFT"/>
+    </enums>
+    <enums name="XrRemotingConnectionStateMSFT" type="enum">
+        <enum value="0" name="XR_REMOTING_CONNECTION_STATE_DISCONNECTED_MSFT"/>
+        <enum value="1" name="XR_REMOTING_CONNECTION_STATE_CONNECTING_MSFT"/>
+        <enum value="2" name="XR_REMOTING_CONNECTION_STATE_CONNECTED_MSFT"/>
+    </enums>
+    <enums name="XrRemotingVideoCodecMSFT" type="enum">
+        <enum value="0" name="XR_REMOTING_VIDEO_CODEC_ANY"/>
+        <enum value="1" name="XR_REMOTING_VIDEO_CODEC_H264"/>
+        <enum value="2" name="XR_REMOTING_VIDEO_CODEC_H265"/>
+    </enums>
+    <enums name="XrRemotingCertificateNameMismatchMSFT" type="enum">
+        <enum value="0" name="XR_REMOTING_CERTIFICATE_NAME_NOT_CHECKED"/>
+        <enum value="1" name="XR_REMOTING_CERTIFICATE_NAME_MATCH"/>
+        <enum value="2" name="XR_REMOTING_CERTIFICATE_NAME_MISMATCH"/>
     </enums>
 
     <!-- SECTION: OpenXR command definitions -->
@@ -2359,7 +2548,51 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
             <param><type>XrControllerModelKeyMSFT</type> <name>modelKey</name></param>
             <param><type>XrControllerModelStateMSFT</type>* <name>state</name></param>
         </command>
-
+      
+        <!-- XR_MSFT_remoting -->
+        <command successcodes="XR_SUCCESS">
+            <proto><type>XrResult</type> <name>xrRemotingSetContextPropertiesMSFT</name></proto>
+            <param><type>XrInstance</type> <name>instance</name></param>
+            <param><type>XrSystemId</type> <name>systemId</name></param>
+            <param>const <type>XrRemotingRemoteContextPropertiesMSFT</type>* <name>contextProperties</name></param>
+        </command>
+      <command successcodes="XR_SUCCESS">
+            <proto><type>XrResult</type> <name>xrRemotingConnectMSFT</name></proto>
+            <param><type>XrInstance</type> <name>instance</name></param>
+            <param><type>XrSystemId</type> <name>systemId</name></param>
+            <param>const <type>XrRemotingConnectInfoMSFT</type>* <name>connectInfo</name></param>
+        </command>
+      <command successcodes="XR_SUCCESS">
+            <proto><type>XrResult</type> <name>xrRemotingListenMSFT</name></proto>
+            <param><type>XrInstance</type> <name>instance</name></param>
+            <param><type>XrSystemId</type> <name>systemId</name></param>
+            <param>const <type>XrRemotingListenInfoMSFT</type>* <name>listenInfo</name></param>
+        </command>
+      <command successcodes="XR_SUCCESS">
+            <proto><type>XrResult</type> <name>xrRemotingDisconnectMSFT</name></proto>
+            <param><type>XrInstance</type> <name>instance</name></param>
+            <param><type>XrSystemId</type> <name>systemId</name></param>
+            <param>const <type>XrRemotingDisconnectInfoMSFT</type>* <name>disconnectInfo</name></param>
+        </command>
+      <command successcodes="XR_SUCCESS">
+            <proto><type>XrResult</type> <name>xrRemotingGetConnectionStateMSFT</name></proto>
+            <param><type>XrInstance</type> <name>instance</name></param>
+            <param><type>XrSystemId</type> <name>systemId</name></param>
+            <param><type>XrRemotingConnectionStateMSFT</type>* <name>connectionState</name></param>
+            <param><type>XrRemotingDisconnectReasonMSFT</type>* <name>lastDisconnectReason</name></param>
+        </command>
+      <command successcodes="XR_SUCCESS">
+            <proto><type>XrResult</type> <name>xrRemotingSetSecureConnectionClientCallbacksMSFT</name></proto>
+            <param><type>XrInstance</type> <name>instance</name></param>
+            <param><type>XrSystemId</type> <name>systemId</name></param>
+            <param>const <type>XrRemotingSecureConnectionClientCallbacksMSFT</type>* <name>secureConnectionClientCallbacks</name></param>
+        </command>
+      <command successcodes="XR_SUCCESS">
+            <proto><type>XrResult</type> <name>xrRemotingSetSecureConnectionServerCallbacksMSFT</name></proto>
+            <param><type>XrInstance</type> <name>instance</name></param>
+            <param><type>XrSystemId</type> <name>systemId</name></param>
+            <param>const <type>XrRemotingSecureConnectionServerCallbacksMSFT</type>* <name>secureConnectionServerCallbacks</name></param>
+        </command>
     </commands>
 
     <!-- SECTION: OpenXR API interface definitions -->
@@ -3428,6 +3661,78 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
             <enum value="&quot;XR_MSFT_extension_101&quot;" name="XR_MSFT_extension_101_EXTENSION_NAME"/>
         </require>
     </extension>
+
+    <extension name="XR_MSFT_remoting" number="66" type="instance" supported="openxr">
+        <require>
+            <enum value="1" name="XR_MSFT_remoting_SPEC_VERSION"/>
+            <enum value="&quot;XR_MSFT_remoting&quot;" name="XR_MSFT_REMOTING_EXTENSION_NAME"/>
+
+            <command name="xrRemotingSetContextPropertiesMSFT"/>
+            <command name="xrRemotingConnectMSFT"/>
+            <command name="xrRemotingListenMSFT"/>
+            <command name="xrRemotingDisconnectMSFT"/>
+            <command name="xrRemotingGetConnectionStateMSFT"/>
+            <command name="xrRemotingSetSecureConnectionClientCallbacksMSFT"/>
+            <command name="xrRemotingSetSecureConnectionServerCallbacksMSFT"/>
+
+            <type name="XrRemotingDisconnectReasonMSFT"/>
+            <type name="XrRemotingConnectionStateMSFT"/>
+            <type name="XrRemotingPreferredVideoCodecMSFT"/>
+            <type name="XrRemotingCertificateNameMismatchMSFT"/>
+          
+            <type name="XrRemotingRemoteContextPropertiesMSFT"/>
+            <type name="XrRemotingConnectInfoMSFT"/>
+            <type name="XrRemotingListenInfoMSFT"/>
+            <type name="XrRemotingDisconnectInfoMSFT"/>
+            <type name="XrRemotingEventDataListeningMSFT"/>
+            <type name="XrRemotingEventDataConnectedMSFT"/>
+            <type name="XrRemotingEventDataDisconnectedMSFT"/>
+            <type name="XrRemotingAuthenticationTokenRequestMSFT"/>
+            <type name="XrRemotingCertificateDataMSFT"/>
+            <type name="XrRemotingCertificateValidationResultMSFT"/>
+            <type name="XrRemotingServerCertificateValidationMSFT"/>
+            <type name="XrRemotingAuthenticationTokenValidationMSFT"/>
+            <type name="XrRemotingServerCertificateRequestMSFT"/>
+            <type name="XrRemotingSecureConnectionClientCallbacksMSFT"/>
+            <type name="XrRemotingSecureConnectionServerCallbacksMSFT"/>
+
+            <enum offset="0" extends="XrStructureType" name="XR_TYPE_REMOTING_REMOTE_CONTEXT_PROPERTIES_MSFT"/>
+            <enum offset="1" extends="XrStructureType" name="XR_TYPE_REMOTING_CONNECT_INFO_MSFT"/>
+            <enum offset="2" extends="XrStructureType" name="XR_TYPE_REMOTING_LISTEN_INFO_MSFT"/>
+            <enum offset="3" extends="XrStructureType" name="XR_TYPE_REMOTING_DISCONNECT_INFO_MSFT"/>
+            <enum offset="4" extends="XrStructureType" name="XR_TYPE_REMOTING_EVENT_DATA_LISTENING_MSFT"/>
+            <enum offset="5" extends="XrStructureType" name="XR_TYPE_REMOTING_EVENT_DATA_CONNECTED_MSFT"/>
+            <enum offset="6" extends="XrStructureType" name="XR_TYPE_REMOTING_EVENT_DATA_DISCONNECTED_MSFT"/>
+            <enum offset="7" extends="XrStructureType" name="XR_TYPE_REMOTING_AUTHENTICATION_TOKEN_REQUEST_MSFT"/>
+            <enum offset="8" extends="XrStructureType" name="XR_TYPE_REMOTING_CERTIFICATE_DATA_MSFT"/>
+            <enum offset="9" extends="XrStructureType" name="XR_TYPE_REMOTING_CERTIFICATE_VALIDATION_RESULT_MSFT"/>
+            <enum offset="10" extends="XrStructureType" name="XR_TYPE_REMOTING_SERVER_CERTIFICATE_VALIDATION_MSFT"/>
+            <enum offset="11" extends="XrStructureType" name="XR_TYPE_REMOTING_AUTHENTICATION_TOKEN_VALIDATION_MSFT"/>
+            <enum offset="12" extends="XrStructureType" name="XR_TYPE_REMOTING_SERVER_CERTIFICATE_REQUEST_MSFT"/>
+            <enum offset="13" extends="XrStructureType" name="XR_TYPE_REMOTING_SECURE_CONNECTION_CLIENT_CALLBACKS_MSFT"/>
+            <enum offset="14" extends="XrStructureType" name="XR_TYPE_REMOTING_SECURE_CONNECTION_SERVER_CALLBACKS_MSFT"/>
+
+            <enum offset="0" extends="XrResult" name="XR_ERROR_REMOTING_NOT_DISCONNECTED_MSFT"/>
+            <enum offset="1" extends="XrResult" name="XR_ERROR_REMOTING_CODEC_NOT_FOUND_MSFT"/>
+            <enum offset="2" extends="XrResult" name="XR_ERROR_REMOTING_CALLBACK_ERROR_MSFT"/>
+        </require>
+    </extension>
+
+      <extension name="XR_MSFT_remoting_frame_mirroring" number="101" type="instance" supported="openxr">
+        <require>
+          <enum value="1" name="XR_MSFT_remoting_frame_mirroring_SPEC_VERSION"/>
+          <enum value="&quot;XR_MSFT_remoting_frame_mirroring&quot;" name="XR_MSFT_REMOTING_FRAME_MIRRORING_EXTENSION_NAME"/>
+
+          <type name="XrRemotingFrameMirrorImageBaseHeaderMSFT"/>
+          <type name="XrRemotingFrameMirrorImageD3D11MSFT"/>
+          <type name="XrRemotingFrameMirrorImageD3D12MSFT"/>
+          <type name="XrRemotingFrameMirrorImageInfoMSFT"/>
+
+          <enum offset="0" extends="XrStructureType" name="XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D11_MSFT"/>
+          <enum offset="1" extends="XrStructureType" name="XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D12_MSFT"/>
+          <enum offset="2" extends="XrStructureType" name="XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_INFO_MSFT"/>
+        </require>
+      </extension>
 
     </extensions>
 
