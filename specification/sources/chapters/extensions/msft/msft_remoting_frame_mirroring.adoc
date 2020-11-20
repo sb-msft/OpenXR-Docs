@@ -1,0 +1,142 @@
+include::../meta/XR_MSFT_remoting_frame_mirroring.adoc[]
+
+:INCS-VAR: ../../../../generated
+
+*Last Modified Date*::
+    2020-09-07
+
+*IP Status*::
+    No known IP claims.
+
+*Contributors*::
+    Felix Reeh, Microsoft +
+    Florian Bagar, Microsoft +
+
+==== Overview
+This extension allows the Holographic Remoting application to receive a copy of the final composited frame that was sent to the Holographic Player application
+and can be used for local display.
+
+[open,refpage='XrRemotingFrameMirrorImageBaseHeaderMSFT',desc='Base structure that can be overridden by a graphics API-specific XrRemotingFrameMirrorImage* child structure',type='structs',xrefs='XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D11_MSFT XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D12_MSFT']
+--
+The slink:XrRemotingFrameMirrorImageBaseHeaderMSFT is a base structure that can be overridden by a 
+graphics API-specific XrRemotingFrameMirrorImage* child structure. The type must be one of the following elink:XrStructureType values:
+ename:XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D11_MSFT, ename:XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D12_MSFT
+
+The slink:XrRemotingFrameMirrorImageBaseHeaderMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingFrameMirrorImageBaseHeaderMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+****
+
+include::../../../../generated/validity/structs/XrRemotingFrameMirrorImageBaseHeaderMSFT.txt[]
+--
+
+[open,refpage='XrRemotingFrameMirrorImageD3D11MSFT',desc='Provides a D3D11 texture to copy the final composited frame into.',type='structs',xrefs='XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D11_MSFT']
+--
+The slink:XrRemotingFrameMirrorImageD3D11MSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingFrameMirrorImageD3D11MSFT.txt[]
+
+The following are the constraints to be mindful of:
+- The texture must have been created on the device provided by the application to the graphics binding.
+- The texture must be bindable to the pipeline as a render target.
+- The texture must be in one of these format: DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_R8G8B8A8_UNORM
+- The texture must not be an array texture.
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:texture is a pointer to a valid ID3D11Texture2D to use.
+****
+
+include::../../../../generated/validity/structs/XrRemotingFrameMirrorImageD3D11MSFT.txt[]
+
+--
+
+[open,refpage='XrRemotingFrameMirrorImageD3D12MSFT',desc='Provides a D3D12 texture to copy the final composited frame into.',type='structs',xrefs='XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D12_MSFT']
+--
+The slink:XrRemotingFrameMirrorImageD3D12MSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingFrameMirrorImageD3D12MSFT.txt[]
+
+The following are the constraints to be mindful of:
+- The texture must have been created on the device provided by the application to the graphics binding.
+- The texture must be bindable to the pipeline as a render target.
+- The texture must be in one of these format: DXGI_FORMAT_B8G8R8A8_UNORM_SRGB, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_R8G8B8A8_UNORM
+- The texture must not be an array texture.
+- The resource states must be compatible with color textures.
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:texture is a pointer to a valid ID3D12Texture2D to use.
+* pname:stateBefore is the "before" usages of the texture when the frame mirror image copy is scheduled by the application, as a bitwise-OR'd combination of D3D12_RESOURCE_STATES enumeration constants.
+* pname:stateAfter is the "after" usages of the texture when the frame mirror image copy is complete, as a bitwise-OR'd combination of D3D12_RESOURCE_STATES enumeration constants.
+****
+
+include::../../../../generated/validity/structs/XrRemotingFrameMirrorImageD3D12MSFT.txt[]
+--
+
+[open,refpage='XrRemotingFrameMirrorImageInfoMSFT',desc='Used to attach a texture target for the frame mirroring to the XrFrameEndInfo structure',type='structs',xrefs='XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_INFO_MSFT']
+--
+The application can submit frame mirror images for the primary view configuration using the flink:xrEndFrame function, 
+by chaining the slink:XrRemotingFrameMirrorImageInfoMSFT structure to the next pointer of slink:XrFrameEndInfo structure.
+Once flink:xrEndFrame has returned, work using the API-specific texture can be scheduled on the device provided by the application without need for additional GPU synchronization.
+		
+The slink:XrRemotingFrameMirrorImageInfoMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingFrameMirrorImageInfoMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:image is a API-agnostic pointer to a API-specific stext:XrRemotingFrameMirrorImage* structure based off of slink:XrRemotingFrameMirrorImageBaseHeaderMSFT.
+****
+
+include::../../../../generated/validity/structs/XrRemotingFrameMirrorImageInfoMSFT.txt[]
+--
+
+*New Object Types*
+
+*New Flag Types*
+
+*New Enum Constants*
+
+elink:XrStructureType enumeration is extended with:
+
+* ename:XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D11_MSFT
+* ename:XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_D3D12_MSFT
+* ename:XR_TYPE_REMOTING_FRAME_MIRROR_IMAGE_INFO_MSFT
+
+*New Enums*
+
+*New Structures*
+
+* slink:XrRemotingFrameMirrorImageBaseHeaderMSFT
+* slink:XrRemotingFrameMirrorImageD3D11MSFT
+* slink:XrRemotingFrameMirrorImageD3D12MSFT
+* slink:XrRemotingFrameMirrorImageInfoMSFT
+
+*New Functions*
+
+*Issues*
+
+*Version History*
+
+* Revision 1, 2020-09-07 (Sohini Banerjee)
+** Initial extension description

@@ -1,0 +1,677 @@
+include::../meta/XR_MSFT_remoting.adoc[]
+
+:INCS-VAR: ../../../../generated
+
+*Last Modified Date*::
+    2020-09-07
+
+*IP Status*::
+    No known IP claims.
+
+*Contributors*::
+    Mark Keinz, Microsoft +
+    Florian Bagar, Microsoft +
+    Sohini Banerjee, Microsoft +
+
+==== Overview
+This extension enables addition of Holographic Remoting capability to OpenXR applications and games.
+
+Holographic Remoting is a technology that uses a network connection to stream rendered holographic content 
+from a PC to an HMD or a mobile device running a suitable Holographic Remoting player app, 
+and to relay pose data and spatial input from the player device back to the remote application.
+Holographic Remoting streams high-resolution/highly-detailed content to devices like Microsoft HoloLens 2 
+or a Windows Mixed Reality PC in real-time thereby allowing rendering of immersive views on perfomance constrained devices.
+
+Setting up a remoting connection requires some extra steps in the OpenXR initialization workflow:
+* Setting remoting configuration parameters, such as maximum bitrate and video codec to use
+* Initiating an outgoing network connection or listening for incoming connections
+* Waiting until a connection has been established (optional)
+If the application does not wait for a successful connection before creating a session, session creation will block 
+until either a connection has been established or the connection attempt has failed.
+
+Note that some player device properties, such as elink:XrViewConfigurationType and elink:XrEnvironmentBlendMode,
+can only return actual values after a remoting connection has been established. Before this point, default values 
+are returned for these properties. The recommended approach is therefore to create the slink:XrSession 
+before enumerating the device properties.
+
+[open,refpage='XrRemotingRemoteContextPropertiesMSFT',desc='Properties of the Remote Context',type='structs',xrefs='XrRemotingVideoCodecMSFT']
+--
+The slink:XrRemotingRemoteContextPropertiesMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingRemoteContextPropertiesMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:maxBitrateKbps is the max bitrate to use for the connection.
+* pname:enableAudio gives the option to enable/disable audio.
+* pname:videoCodec is the video codec to use for the connection.
+****
+
+include::../../../../generated/validity/structs/XrRemotingRemoteContextPropertiesMSFT.txt[]
+--
+
+[open,refpage='XrRemotingConnectInfoMSFT',desc='Describes how the remote, in network client mode, should connect to a player running in network server mode',type='structs']
+--
+The slink:XrRemotingConnectInfoMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingConnectInfoMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:remoteHostName is the hostname or IP address of the player running in network server mode to connect to.
+* pname:remotePort is the port number of the server's handshake port.
+* pname:secureConnection states whether an encrypted and authenticated connection method is to be used for the connection.
+****
+
+include::../../../../generated/validity/structs/XrRemotingConnectInfoMSFT.txt[]
+--
+
+[open,refpage='XrRemotingListenInfoMSFT',desc='Describes how the remote, in network server mode, should listen to connections from a player running in network client mode',type='structs']
+--
+The slink:XrRemotingListenInfoMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingListenInfoMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:listenInterface is the local hostname or IP address of the network interface to listen for incoming connections on.
+* pname:handshakeListenPort is the port number of the server's handshake port where clients always connect to first.
+* pname:transportListenPort is the port number of the transport implementation where clients are redirected to the primary transport as part of the handshake.
+* pname:secureConnection states whether an encrypted and authenticated connection method is to be used for the connection.
+****
+
+include::../../../../generated/validity/structs/XrRemotingListenInfoMSFT.txt[]
+--
+
+[open,refpage='XrRemotingDisconnectInfoMSFT',desc='Describes how to close the current connection',type='structs']
+--
+The slink:XrRemotingDisconnectInfoMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingDisconnectInfoMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+****
+
+include::../../../../generated/validity/structs/XrRemotingDisconnectInfoMSFT.txt[]
+--
+
+[open,refpage='XrRemotingEventDataListeningMSFT',desc='Describes the connection properties when the system enters the network listening state',type='structs']
+--
+The slink:XrRemotingEventDataListeningMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingEventDataListeningMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:listeningPort is the port number the remote is listening on.
+****
+
+include::../../../../generated/validity/structs/XrRemotingEventDataListeningMSFT.txt[]
+--
+
+[open,refpage='XrRemotingEventDataConnectedMSFT',desc='Indicates that a connection has been established and describes its properties',type='structs']
+--
+The slink:XrRemotingEventDataConnectedMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingEventDataConnectedMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+****
+
+include::../../../../generated/validity/structs/XrRemotingEventDataConnectedMSFT.txt[]
+--
+
+[open,refpage='XrRemotingEventDataDisconnectedMSFT',desc='Describes that a disconnect has occured',type='structs']
+--
+The slink:XrRemotingEventDataDisconnectedMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingEventDataDisconnectedMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:disconnectReason is the reason why the disconnect happened.
+****
+
+include::../../../../generated/validity/structs/XrRemotingEventDataDisconnectedMSFT.txt[]
+--
+
+[open,refpage='XrRemotingAuthenticationTokenRequestMSFT',desc='Describes a request for an authentication token to be passed to the server as part of the secure connection process',type='structs']
+--
+The slink:XrRemotingAuthenticationTokenRequestMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingAuthenticationTokenRequestMSFT.txt[]
+
+.Member Descriptions
+****
+This extension uses a slightly modified two-call idiom when calling the callback. A buffer of an initial size
+is already passed in the first call, but the callback implementation can request a larger buffer (of up to 1 KiB)
+following the Buffer Size Parameter Behavior. The callback function will then be called again with a buffer of the
+requested size.
+
+For more details regarding the handling of buffer size parameters in OpenXR, 
+please refer to : https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#buffer-size-parameters 
+
+The value written to tokenBuffer is expected to be a null-terminated string.
+****
+
+include::../../../../generated/validity/structs/XrRemotingAuthenticationTokenRequestMSFT.txt[]
+--
+
+[open,refpage='XrRemotingCertificateDataMSFT',desc='Data for one of the certificates from the certificate chain of a certificate validation request',type='structs']
+--
+The slink:XrRemotingCertificateDataMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingCertificateDataMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:size is the size of the certificate data
+* pname:data is the pointer to the certificate data
+****
+
+include::../../../../generated/validity/structs/XrRemotingCertificateDataMSFT.txt[]
+--
+
+[open,refpage='XrRemotingCertificateValidationResultMSFT',desc='The result of a certificate validation',type='structs']
+--
+The slink:XrRemotingCertificateValidationResultMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingCertificateValidationResultMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:trustedRoot states whether the certificate can be traced back to a trusted root
+* pname:revoked states whether the certificate has been revoked
+* pname:expired states whether the certificate is outside of its validity period (expired or not yet valid)
+* pname:wrongUsage states whether the allowed certificate usage is not compatible with its actual usage
+* pname:nameMismatch states whether there is a name mismatch between the name of the host presenting the certificate and the certificate subject 
+  elink:XrRemotingCertificateNameMismatchMSFT
+* pname:revocationCheckFailed states whether the revocation check failed
+* pname:invalidCertOrChain states whether the certificate to validate and/or certificate(s) in the certificate chain contained invalid data and could not be examined
+****
+
+include::../../../../generated/validity/structs/XrRemotingCertificateValidationResultMSFT.txt[]
+--
+
+[open,refpage='XrRemotingServerCertificateValidationMSFT',desc='Details of a certificate validation request and the resultant outcome',type='structs']
+--
+The slink:XrRemotingServerCertificateValidationMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingServerCertificateValidationMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:context is a user-defined pointer-size value which will be passed verbatim as a parameter to the callback functions. May be NULL.
+* pname:hostName is the name of the host the connection is being established with
+* pname:forceRevocationCheck states whether a revocation check should be forced
+* pname:numCertificates is the length of the certificate chain
+* pname:certificates is the certificate chain with the first certificate being the subject certificate
+* pname:systemValidationResult will be provided if validation by the underlying system has been requested
+* pname:validationResultOut is the result of the certificate validation request
+****
+
+include::../../../../generated/validity/structs/XrRemotingServerCertificateValidationMSFT.txt[]
+--
+
+[open,refpage='XrRemotingAuthenticationTokenValidationMSFT',desc='Details of a token validation request and the resultant outcome',type='structs']
+--
+The slink:XrRemotingAuthenticationTokenValidationMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingAuthenticationTokenValidationMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:context is a user-defined pointer-size value which will be passed verbatim as a parameter to the callback functions. May be NULL.
+* pname:token is the passed in authentication token
+* pname:tokenValidOut indicates whether the validation result passed
+****
+
+include::../../../../generated/validity/structs/XrRemotingAuthenticationTokenValidationMSFT.txt[]
+--
+
+[open,refpage='XrRemotingServerCertificateRequestMSFT',desc='Describes a server certificate request and output buffers to store the corresponding data in',type='structs']
+--
+The slink:XrRemotingServerCertificateRequestMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingServerCertificateRequestMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:context is a user-defined pointer-size value which will be passed verbatim as a parameter to the callback functions. May be NULL.
+
+* certStore: a binary blob (not null-terminated) containing a certificate store in PKCS#12 format. This store must contain the server 
+  certificate and the associated private key; optionally, it can also contain the certificate chain for the server certificate.
+* keyPassphrase: a null-terminated string value containing the passphrase needed to decrypt the private key. Can be an empty string 
+  if the private key is not encrypted.
+* subjectName: a null-terminated string value containing the name by which the server certificate to be used is identified in the 
+  certificate store. This is usually either the subject common name, or a friendly name assigned to the certificate.
+
+This extension uses a slightly modified two-call idiom when calling the callback. A buffer of an initial size
+is already passed in the first call, but the callback implementation can request a larger buffer (of up to 1 KiB)
+following the Buffer Size Parameter Behavior. The callback function will then be called again with a buffer of the
+requested size.
+
+For more details regarding the handling of buffer size parameters in OpenXR, 
+please refer to : https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#buffer-size-parameters
+****
+
+include::../../../../generated/validity/structs/XrRemotingServerCertificateRequestMSFT.txt[]
+--
+
+[open,refpage='XrRemotingSecureConnectionServerCallbacksMSFT',desc='Describes a callback interface for certificate requests and authentication token validation on the server',type='structs']
+--
+The slink:XrRemotingSecureConnectionServerCallbacksMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingSecureConnectionServerCallbacksMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:context is a user-defined pointer-size value which will be passed verbatim as a parameter to the callback functions. May be NULL.
+* pname:requestServerCertificateCallback is the callback interface that needs to be passed when the server network context requests a certificate
+* pname:validateAuthenticationTokenCallback is the callback interface that needs to be passed when the server network context needs to validate a client's authentication token
+* pname:authenticationRealm is the name of the current authentication realm
+****
+
+include::../../../../generated/validity/structs/XrRemotingSecureConnectionServerCallbacksMSFT.txt[]
+--
+
+[open,refpage='XrRemotingSecureConnectionClientCallbacksMSFT',desc='Describes a callback interface for certificate validation and authentication token requests on the client.',type='structs']
+--
+The slink:XrRemotingSecureConnectionClientCallbacksMSFT structure is defined as:
+
+include::../../../../generated/api/structs/XrRemotingSecureConnectionClientCallbacksMSFT.txt[]
+
+.Member Descriptions
+****
+* pname:type is the elink:XrStructureType of this structure.
+* pname:next is code:NULL or a pointer to the next structure in a structure
+  chain.
+  No such structures are defined in core OpenXR or this extension.
+* pname:context is a user-defined pointer-size value which will be passed verbatim as a parameter to the callback functions. May be NULL.
+* pname:requestAuthenticationTokenCallback is the callback interface that needs to be passed when the client network context requests an authentication token to    authenticate itself against the server.
+* pname:validateServerCertificateCallback is the callback interface that needs to be passed when the client network context needs to validate a certificate
+* pname:peformSystemValidation states whether to request validation of the server's certificate using the validation functions of the underlying operating system or cryptography library.
+****
+
+include::../../../../generated/validity/structs/XrRemotingSecureConnectionClientCallbacksMSFT.txt[]
+--
+
+*Set the properties of the Remote Context*
+
+[open,refpage='xrRemotingSetContextPropertiesMSFT',type='protos',desc='Set the properties of the Remote Context',xrefs='XrRemotingRemoteContextPropertiesMSFT']
+--
+
+include::../../../../generated/api/protos/xrRemotingSetContextPropertiesMSFT.txt[]
+
+.Parameter Descriptions
+****
+* pname:instance is the handle of the instance from which to get the information
+* pname:systemId is the basetype:XrSystemId of the current system 
+* pname:contextProperties is the remote context properties like the max bitrate, video codec etc. to use for the connection.
+****
+
+This configuration must happen before the actual connection attempt in flink:xrRemotingConnectMSFT
+
+include::../../../../generated/validity/protos/xrRemotingSetContextPropertiesMSFT.txt[]
+--
+
+[open,refpage='xrRemotingConnectMSFT',type='protos',desc='Connect to a player running in network server mode with/without using an encrypted and authenticated connection method as requested in the slink:XrRemotingConnectInfoMSFT',xrefs='XrRemotingConnectInfoMSFT']
+--
+
+Connect to a player running in network server mode with/without using an encrypted and authenticated connection method as requested in the slink:XrRemotingConnectInfoMSFT.
+
+include::../../../../generated/api/protos/xrRemotingConnectMSFT.txt[]
+
+.Parameter Descriptions
+****
+* pname:instance is the handle of the instance from which to get the information
+* pname:systemId is the basetype:XrSystemId of the current system 
+* pname:connectInfo is the slink:XrRemotingConnectInfoMSFT properties/settings to use for the connection
+****
+
+This connection attempt should only happen after the remote context properties has been configured via a call to flink:xrRemotingSetContextPropertiesMSFT.
+
+include::../../../../generated/validity/protos/xrRemotingConnectMSFT.txt[]
+--
+
+*Sets up the remote context, in network server mode, to listen for connections from players running in network client mode*
+
+[open,refpage='xrRemotingListenMSFT',type='protos',desc='Sets up the remote context, in network server mode, to listen for client connections',xrefs='XrRemotingListenInfoMSFT']
+--
+
+include::../../../../generated/api/protos/xrRemotingListenMSFT.txt[]
+
+.Parameter Descriptions
+****
+* pname:instance is the handle of the instance from which to get the information
+* pname:systemId is the basetype:XrSystemId of the current system 
+* pname:listenInfo is the slink:XrRemotingListenInfoMSFT properties/settings to use for the connection
+****
+
+This listen attempt should only happen after the remote context properties has been configured via a call to flink:xrRemotingSetContextPropertiesMSFT.
+
+include::../../../../generated/validity/protos/xrRemotingListenMSFT.txt[]
+--
+
+*Closes current connection and stops listening*
+
+[open,refpage='xrRemotingDisconnectMSFT',type='protos',desc='Closes current connection and stops listening if in listen mode',xrefs='']
+--
+
+include::../../../../generated/api/protos/xrRemotingDisconnectMSFT.txt[]
+
+.Parameter Descriptions
+****
+* pname:instance is the handle of the instance from which to get the information
+* pname:systemId is the basetype:XrSystemId of the current system 
+* pname:disconnectInfo is the slink:XrRemotingDisconnectInfoMSFT settings to use while closing current connection
+****
+
+include::../../../../generated/validity/protos/xrRemotingDisconnectMSFT.txt[]
+--
+
+*Returns the current connection state*
+
+[open,refpage='xrRemotingGetConnectionStateMSFT',type='protos',desc='Returns the current connection state',xrefs='XrRemotingConnectionStateMSFT XrRemotingDisconnectReasonMSFT']
+--
+
+include::../../../../generated/api/protos/xrRemotingGetConnectionStateMSFT.txt[]
+
+.Parameter Descriptions
+****
+* pname:instance is the handle of the instance from which to get the information
+* pname:systemId is the basetype:XrSystemId of the current system 
+* pname:connectionState is the current connection state elink:XrRemotingConnectionStateMSFT
+* pname:lastDisconnectReason is the last elink:XrRemotingDisconnectReasonMSFT
+****
+
+include::../../../../generated/validity/protos/xrRemotingGetConnectionStateMSFT.txt[]
+--
+
+*Sets the client callbacks for the secure connection*
+
+[open,refpage='xrRemotingSetSecureConnectionClientCallbacksMSFT',type='protos',desc='Sets the client callbacks for the secure connection',xrefs='XrRemotingSecureConnectionClientCallbacksMSFT']
+--
+
+include::../../../../generated/api/protos/xrRemotingSetSecureConnectionClientCallbacksMSFT.txt[]
+
+.Parameter Descriptions
+****
+* pname:instance is the handle of the instance from which to get the information
+* pname:systemId is the basetype:XrSystemId of the current system 
+* pname:secureConnectionClientCallbacks is the callback interfaces that needs to be passed for the client network context
+****
+
+include::../../../../generated/validity/protos/xrRemotingSetSecureConnectionClientCallbacksMSFT.txt[]
+--
+
+*Sets the server callbacks for the secure connection*
+
+[open,refpage='xrRemotingSetSecureConnectionServerCallbacksMSFT',type='protos',desc='Sets the server callbacks for the secure connection',xrefs='XrRemotingSecureConnectionServerCallbacksMSFT']
+--
+
+include::../../../../generated/api/protos/xrRemotingSetSecureConnectionServerCallbacksMSFT.txt[]
+
+.Parameter Descriptions
+****
+* pname:instance is the handle of the instance from which to get the information
+* pname:systemId is the basetype:XrSystemId of the current system 
+* pname:secureConnectionServerCallbacks is the callback interfaces that needs to be passed for the server network context
+****
+
+include::../../../../generated/validity/protos/xrRemotingSetSecureConnectionServerCallbacksMSFT.txt[]
+--
+
+[open,refpage='XrRemotingDisconnectReasonMSFT',type='enums',desc='Describes the reason for the disconnect',xrefs='']
+--
+The elink:XrRemotingDisconnectReasonMSFT describes the reason for why the connection disconnected
+
+include::../../../../generated/api/enums/XrRemotingDisconnectReasonMSFT.txt[]
+
+.Enumerant Descriptions
+****
+* ename:XR_REMOTING_DISCONNECT_REASON_NONE_MSFT represents the connection succeeded 
+  and there was no connection failure.
+* ename:XR_REMOTING_DISCONNECT_REASON_UNKNOWN_MSFT represents the connection failed 
+  for an unknown reason.
+* ename:XR_REMOTING_DISCONNECT_REASON_NO_SERVER_CERTIFICATE_MSFT represents that the 
+  secure connection was enabled, but certificate was missing, invalid, or not usable (Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_PORT_BUSY_MSFT represents that the 
+  handshake port could not be opened for accepting connections (Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_UNREACHABLE_MSFT represents that the 
+  handshake server is unreachable (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_CONNECTION_FAILED_MSFT represents that the 
+  handshake server closed the connection prematurely; likely due to TLS/Plain mismatch or 
+  invalid certificate (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_AUTHENTICATION_FAILED_MSFT represents that the
+  authentication with the handshake server failed (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_REMOTING_VERSION_MISMATCH_MSFT represents that 
+  no common compatible remoting version could be determined during handshake (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_INCOMPATIBLE_TRANSPORT_PROTOCOLS_MSFT represents 
+  no common transport protocol could be determined during handshake (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_FAILED_MSFT represents that the
+  handshake failed for any other reason (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_TRANSPORT_PORT_BUSY_MSFT represents that the 
+  transport port could not be openend for accepting connections (Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_TRANSPORT_UNREACHABLE_MSFT represents that the
+  transport server is unreachable (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_TRANSPORT_CONNECTION_FAILED_MSFT represents 
+  that the transport connection was closed before all communication channels had 
+  been set up (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_PROTOCOL_VERSION_MISMATCH_MSFT represents that the
+  transport connection was closed due to protocol version mismatch (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_PROTOCOL_ERROR_MSFT represents that a protocol 
+  error occurred that was severe enough to invalidate the current connection or connection 
+  attempt (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_VIDEO_CODEC_NOT_AVAILABLE_MSFT represents that the
+  transport connection was closed due to the requested video codec not being available 
+  (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_CANCELED_MSFT represents that the connection 
+  attempt has been canceled (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_CONNECTION_LOST_MSFT represents that the
+  connection has been closed by peer (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_DEVICE_LOST_MSFT represents that the connection 
+  has been closed due to graphics device loss (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_DISCONNECT_REQUEST_MSFT represents that the 
+  connection has been closed by request (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_NETWORK_UNREACHABLE_MSFT represents that
+  the network is unreachable. This usually means the client knows no route to reach the 
+  remote host (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_HANDSHAKE_CONNECTION_REFUSED_MSFT represents that
+  no connection could be made because the remote side actively refused it. Usually this 
+  means that no host application is running (Client).
+* ename:XR_REMOTING_DISCONNECT_REASON_VIDEO_FORMAT_NOT_AVAILABLE_MSFT represents that the
+  transport connection was closed due to the requested video format not being available
+  (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_PEER_DISCONNECT_REQUEST_MSFT represents that it
+  disconnected after receiving a disconnect request from the peer (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_PEER_DISCONNECT_TIMEOUT_MSFT represents that 
+  it timed out while waiting for peer to close connection (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_SESSION_OPEN_TIMEOUT_MSFT represents that it
+  timed out while waiting for transport session to be opened (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_REMOTING_HANDSHAKE_TIMEOUT_MSFT represents that
+  it timed out while waiting for the remoting handshake to complete (Client/Server).
+* ename:XR_REMOTING_DISCONNECT_REASON_INTERNAL_ERROR_MSFT represents that the
+  connection failed due to an internal error (Client/Server).
+****
+
+--
+
+[open,refpage='XrRemotingConnectionStateMSFT',type='enums',desc='Describes the current connection state',xrefs='']
+--
+The elink:XrRemotingConnectionStateMSFT describes the current connection state
+
+include::../../../../generated/api/enums/XrRemotingConnectionStateMSFT.txt[]
+
+.Enumerant Descriptions
+****
+* ename:XR_REMOTING_CONNECTION_STATE_DISCONNECTED_MSFT represents that the state is
+  not connected, and no connection attempt is in progress (Client), 
+  or not listening for incoming connections (Server).
+* ename:XR_REMOTING_CONNECTION_STATE_CONNECTING_MSFT represents connecting to server (Client), 
+  listening for incoming connections (Server), or performing connection handshake (Client/Server).
+* ename:XR_REMOTING_CONNECTION_STATE_CONNECTED_MSFT represents fully connected, 
+  all communication channels established (Client/Server).
+****
+
+--
+
+[open,refpage='XrRemotingVideoCodecMSFT',type='enums',desc='Describes the preferred video codec to use for the connection',xrefs='']
+--
+The elink:XrRemotingVideoCodecMSFT describes the preferred video codec to use for the connection
+
+include::../../../../generated/api/enums/XrRemotingVideoCodecMSFT.txt[]
+
+.Enumerant Descriptions
+****
+* ename:XR_REMOTING_VIDEO_CODEC_ANY_MSFT represents HEVC video codec preferred,
+  fall back to H264 if HEVC is not supported by all participants.
+* ename:XR_REMOTING_VIDEO_CODEC_H264_MSFT represents H264 video codec.
+* ename:XR_REMOTING_VIDEO_CODEC_H265_MSFT represents HEVC video codec.
+****
+
+--
+
+[open,refpage='XrRemotingCertificateNameMismatchMSFT',type='enums',desc='Describes whether the name of the host presenting the certificate does not match the certificate subject',xrefs='']
+--
+The elink:XrRemotingCertificateNameMismatchMSFT describes whether the name of the host presenting the certificate does not match the certificate subject 
+or if the name match cannot be reliably determined.
+
+include::../../../../generated/api/enums/XrRemotingCertificateNameMismatchMSFT.txt[]
+
+.Enumerant Descriptions
+****
+* ename:XR_REMOTING_CERTIFICATE_NAME_MISMATCH_NOT_CHECKED_MSFT represents that the
+  name match cannot be reliably determined.
+* ename:XR_REMOTING_CERTIFICATE_NAME_MISMATCH_MATCH_MSFT represents the name of the 
+  host presenting the certificate matches the certificate subject.
+* ename:XR_REMOTING_CERTIFICATE_NAME_MISMATCH_MISMATCH_MSFT represents the name of the 
+  host presenting the certificate does not match the certificate subject.
+****
+
+--
+
+*New Object Types*
+
+*New Flag Types*
+
+*New Enum Constants*
+
+elink:XrStructureType enumeration is extended with:
+
+* ename:XR_TYPE_REMOTING_REMOTE_CONTEXT_PROPERTIES_MSFT,
+* ename:XR_TYPE_REMOTING_CONNECT_INFO_MSFT
+* ename:XR_TYPE_REMOTING_LISTEN_INFO_MSFT
+* ename:XR_TYPE_REMOTING_DISCONNECT_INFO_MSFT
+* ename:XR_TYPE_REMOTING_EVENT_DATA_LISTENING_MSFT
+* ename:XR_TYPE_REMOTING_EVENT_DATA_CONNECTED_MSFT
+* ename:XR_TYPE_REMOTING_EVENT_DATA_DISCONNECTED_MSFT
+* ename:XR_TYPE_REMOTING_AUTHENTICATION_TOKEN_REQUEST_MSFT
+* ename:XR_TYPE_REMOTING_CERTIFICATE_DATA_MSFT
+* ename:XR_TYPE_REMOTING_CERTIFICATE_VALIDATION_RESULT_MSFT
+* ename:XR_TYPE_REMOTING_SERVER_CERTIFICATE_VALIDATION_MSFT
+* ename:XR_TYPE_REMOTING_AUTHENTICATION_TOKEN_VALIDATION_MSFT
+* ename:XR_TYPE_REMOTING_SERVER_CERTIFICATE_REQUEST_MSFT
+* ename:XR_TYPE_REMOTING_SECURE_CONNECTION_CLIENT_CALLBACKS_MSFT
+* ename:XR_TYPE_REMOTING_SECURE_CONNECTION_SERVER_CALLBACKS_MSFT
+
+elink:XrResult enumeration is extended with:
+
+* ename:XR_ERROR_REMOTING_NOT_DISCONNECTED_MSFT
+* ename:XR_ERROR_REMOTING_CODEC_NOT_FOUND_MSFT
+* ename:XR_ERROR_REMOTING_CALLBACK_ERROR_MSFT
+
+*New Enums*
+
+* elink:XrRemotingDisconnectReasonMSFT
+* elink:XrRemotingConnectionStateMSFT
+* elink:XrRemotingVideoCodecMSFT
+* elink:XrRemotingCertificateNameMismatchMSFT
+
+*New Structures*
+
+* slink:XrRemotingRemoteContextPropertiesMSFT
+* slink:XrRemotingConnectInfoMSFT
+* slink:XrRemotingListenInfoMSFT
+* slink:XrRemotingDisconnectInfoMSFT
+* slink:XrRemotingEventDataListeningMSFT
+* slink:XrRemotingEventDataConnectedMSFT
+* slink:XrRemotingEventDataDisconnectedMSFT
+* slink:XrRemotingAuthenticationTokenRequestMSFT
+* slink:XrRemotingCertificateDataMSFT
+* slink:XrRemotingCertificateValidationResultMSFT
+* slink:XrRemotingServerCertificateValidationMSFT
+* slink:XrRemotingAuthenticationTokenValidationMSFT
+* slink:XrRemotingServerCertificateRequestMSFT
+* slink:XrRemotingSecureConnectionClientCallbacksMSFT
+* slink:XrRemotingSecureConnectionServerCallbacksMSFT
+
+*New Functions*
+* flink:xrRemotingSetContextPropertiesMSFT
+* flink:xrRemotingConnectMSFT
+* flink:xrRemotingListenMSFT
+* flink:xrRemotingDisconnectMSFT
+* flink:xrRemotingGetConnectionStateMSFT
+* flink:xrRemotingSetSecureConnectionClientCallbacksMSFT
+* flink:xrRemotingSetSecureConnectionServerCallbacksMSFT
+
+*Issues*
+
+*Version History*
+
+* Revision 1, 2020-09-07 (Sohini Banerjee)
+** Initial extension description
