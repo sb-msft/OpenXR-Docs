@@ -29,9 +29,9 @@ Setting up a remoting connection requires some extra steps in the OpenXR initial
 If the application does not wait for a successful connection before creating a session, session creation will block 
 until either a connection has been established or the connection attempt has failed.
 
-Note that some player device properties, such as slink:XrViewConfigurationType and slink:XrEnvironmentBlendMode,
+Note that some player device properties, such as elink:XrViewConfigurationType and elink:XrEnvironmentBlendMode,
 can only return actual values after a remoting connection has been established. Before this point, default values 
-are returned for these properties. The recommended approach is therefore to create the XrSession 
+are returned for these properties. The recommended approach is therefore to create the slink:XrSession 
 before enumerating the device properties.
 
 [open,refpage='XrRemotingRemoteContextPropertiesMSFT',desc='Properties of the Remote Context',type='structs',xrefs='XrRemotingVideoCodecMSFT']
@@ -51,6 +51,9 @@ include::../../../../generated/api/structs/XrRemotingRemoteContextPropertiesMSFT
 * pname:videoCodec is the video codec to use for the connection.
 ****
 
+include::../../../../generated/validity/structs/XrRemotingRemoteContextPropertiesMSFT.txt[]
+--
+
 [open,refpage='XrRemotingConnectInfoMSFT',desc='Describes how the remote, in network client mode, should connect to a player running in network server mode',type='structs']
 --
 The slink:XrRemotingConnectInfoMSFT structure is defined as:
@@ -67,6 +70,9 @@ include::../../../../generated/api/structs/XrRemotingConnectInfoMSFT.txt[]
 * pname:remotePort is the port number of the server's handshake port.
 * pname:secureConnection states whether an encrypted and authenticated connection method is to be used for the connection.
 ****
+
+include::../../../../generated/validity/structs/XrRemotingConnectInfoMSFT.txt[]
+--
 
 [open,refpage='XrRemotingListenInfoMSFT',desc='Describes how the remote, in network server mode, should listen to connections from a player running in network client mode',type='structs']
 --
@@ -86,6 +92,9 @@ include::../../../../generated/api/structs/XrRemotingListenInfoMSFT.txt[]
 * pname:secureConnection states whether an encrypted and authenticated connection method is to be used for the connection.
 ****
 
+include::../../../../generated/validity/structs/XrRemotingListenInfoMSFT.txt[]
+--
+
 [open,refpage='XrRemotingDisconnectInfoMSFT',desc='Describes how to close the current connection',type='structs']
 --
 The slink:XrRemotingDisconnectInfoMSFT structure is defined as:
@@ -99,6 +108,9 @@ include::../../../../generated/api/structs/XrRemotingDisconnectInfoMSFT.txt[]
   chain.
   No such structures are defined in core OpenXR or this extension.
 ****
+
+include::../../../../generated/validity/structs/XrRemotingDisconnectInfoMSFT.txt[]
+--
 
 [open,refpage='XrRemotingEventDataListeningMSFT',desc='Describes the connection properties when the system enters the network listening state',type='structs']
 --
@@ -115,6 +127,9 @@ include::../../../../generated/api/structs/XrRemotingEventDataListeningMSFT.txt[
 * pname:listeningPort is the port number the remote is listening on.
 ****
 
+include::../../../../generated/validity/structs/XrRemotingEventDataListeningMSFT.txt[]
+--
+
 [open,refpage='XrRemotingEventDataConnectedMSFT',desc='Indicates that a connection has been established and describes its properties',type='structs']
 --
 The slink:XrRemotingEventDataConnectedMSFT structure is defined as:
@@ -128,6 +143,9 @@ include::../../../../generated/api/structs/XrRemotingEventDataConnectedMSFT.txt[
   chain.
   No such structures are defined in core OpenXR or this extension.
 ****
+
+include::../../../../generated/validity/structs/XrRemotingEventDataConnectedMSFT.txt[]
+--
 
 [open,refpage='XrRemotingEventDataDisconnectedMSFT',desc='Describes that a disconnect has occured',type='structs']
 --
@@ -143,6 +161,9 @@ include::../../../../generated/api/structs/XrRemotingEventDataDisconnectedMSFT.t
   No such structures are defined in core OpenXR or this extension.
 * pname:disconnectReason is the reason why the disconnect happened.
 ****
+
+include::../../../../generated/validity/structs/XrRemotingEventDataDisconnectedMSFT.txt[]
+--
 
 [open,refpage='XrRemotingAuthenticationTokenRequestMSFT',desc='Describes a request for an authentication token to be passed to the server as part of the secure connection process',type='structs']
 --
@@ -163,6 +184,9 @@ please refer to : https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.
 The value written to tokenBuffer is expected to be a null-terminated string.
 ****
 
+include::../../../../generated/validity/structs/XrRemotingAuthenticationTokenRequestMSFT.txt[]
+--
+
 [open,refpage='XrRemotingCertificateDataMSFT',desc='Data for one of the certificates from the certificate chain of a certificate validation request',type='structs']
 --
 The slink:XrRemotingCertificateDataMSFT structure is defined as:
@@ -178,6 +202,9 @@ include::../../../../generated/api/structs/XrRemotingCertificateDataMSFT.txt[]
 * pname:size is the size of the certificate data
 * pname:data is the pointer to the certificate data
 ****
+
+include::../../../../generated/validity/structs/XrRemotingCertificateDataMSFT.txt[]
+--
 
 [open,refpage='XrRemotingCertificateValidationResultMSFT',desc='The result of a certificate validation',type='structs']
 --
@@ -201,6 +228,9 @@ include::../../../../generated/api/structs/XrRemotingCertificateValidationResult
 * pname:invalidCertOrChain states whether the certificate to validate and/or certificate(s) in the certificate chain contained invalid data and could not be examined
 ****
 
+include::../../../../generated/validity/structs/XrRemotingCertificateValidationResultMSFT.txt[]
+--
+
 [open,refpage='XrRemotingServerCertificateValidationMSFT',desc='Details of a certificate validation request and the resultant outcome',type='structs']
 --
 The slink:XrRemotingServerCertificateValidationMSFT structure is defined as:
@@ -222,6 +252,9 @@ include::../../../../generated/api/structs/XrRemotingServerCertificateValidation
 * pname:validationResultOut is the result of the certificate validation request
 ****
 
+include::../../../../generated/validity/structs/XrRemotingServerCertificateValidationMSFT.txt[]
+--
+
 [open,refpage='XrRemotingAuthenticationTokenValidationMSFT',desc='Details of a token validation request and the resultant outcome',type='structs']
 --
 The slink:XrRemotingAuthenticationTokenValidationMSFT structure is defined as:
@@ -238,6 +271,9 @@ include::../../../../generated/api/structs/XrRemotingAuthenticationTokenValidati
 * pname:token is the passed in authentication token
 * pname:tokenValidOut indicates whether the validation result passed
 ****
+
+include::../../../../generated/validity/structs/XrRemotingAuthenticationTokenValidationMSFT.txt[]
+--
 
 [open,refpage='XrRemotingServerCertificateRequestMSFT',desc='Describes a server certificate request and output buffers to store the corresponding data in',type='structs']
 --
@@ -269,6 +305,9 @@ For more details regarding the handling of buffer size parameters in OpenXR,
 please refer to : https://www.khronos.org/registry/OpenXR/specs/1.0/html/xrspec.html#buffer-size-parameters
 ****
 
+include::../../../../generated/validity/structs/XrRemotingServerCertificateRequestMSFT.txt[]
+--
+
 [open,refpage='XrRemotingSecureConnectionServerCallbacksMSFT',desc='Describes a callback interface for certificate requests and authentication token validation on the server',type='structs']
 --
 The slink:XrRemotingSecureConnectionServerCallbacksMSFT structure is defined as:
@@ -286,6 +325,9 @@ include::../../../../generated/api/structs/XrRemotingSecureConnectionServerCallb
 * pname:validateAuthenticationTokenCallback is the callback interface that needs to be passed when the server network context needs to validate a client's authentication token
 * pname:authenticationRealm is the name of the current authentication realm
 ****
+
+include::../../../../generated/validity/structs/XrRemotingSecureConnectionServerCallbacksMSFT.txt[]
+--
 
 [open,refpage='XrRemotingSecureConnectionClientCallbacksMSFT',desc='Describes a callback interface for certificate validation and authentication token requests on the client.',type='structs']
 --
@@ -305,6 +347,8 @@ include::../../../../generated/api/structs/XrRemotingSecureConnectionClientCallb
 * pname:peformSystemValidation states whether to request validation of the server's certificate using the validation functions of the underlying operating system or cryptography library.
 ****
 
+include::../../../../generated/validity/structs/XrRemotingSecureConnectionClientCallbacksMSFT.txt[]
+--
 
 *Set the properties of the Remote Context*
 
@@ -316,7 +360,7 @@ include::../../../../generated/api/protos/xrRemotingSetContextPropertiesMSFT.txt
 .Parameter Descriptions
 ****
 * pname:instance is the handle of the instance from which to get the information
-* pname:systemId is the slink:XrSystemId of the current system 
+* pname:systemId is the basetype:XrSystemId of the current system 
 * pname:contextProperties is the remote context properties like the max bitrate, video codec etc. to use for the connection.
 ****
 
@@ -325,17 +369,17 @@ This configuration must happen before the actual connection attempt in flink:xrR
 include::../../../../generated/validity/protos/xrRemotingSetContextPropertiesMSFT.txt[]
 --
 
-*Connect to a player running in network server mode with/without using an encrypted and authenticated connection method as requested in the slink:XrRemotingConnectInfoMSFT*
-
 [open,refpage='xrRemotingConnectMSFT',type='protos',desc='Connect to a player running in network server mode with/without using an encrypted and authenticated connection method as requested in the slink:XrRemotingConnectInfoMSFT',xrefs='XrRemotingConnectInfoMSFT']
 --
+
+Connect to a player running in network server mode with/without using an encrypted and authenticated connection method as requested in the slink:XrRemotingConnectInfoMSFT.
 
 include::../../../../generated/api/protos/xrRemotingConnectMSFT.txt[]
 
 .Parameter Descriptions
 ****
 * pname:instance is the handle of the instance from which to get the information
-* pname:systemId is the slink:XrSystemId of the current system 
+* pname:systemId is the basetype:XrSystemId of the current system 
 * pname:connectInfo is the slink:XrRemotingConnectInfoMSFT properties/settings to use for the connection
 ****
 
@@ -354,7 +398,7 @@ include::../../../../generated/api/protos/xrRemotingListenMSFT.txt[]
 .Parameter Descriptions
 ****
 * pname:instance is the handle of the instance from which to get the information
-* pname:systemId is the slink:XrSystemId of the current system 
+* pname:systemId is the basetype:XrSystemId of the current system 
 * pname:listenInfo is the slink:XrRemotingListenInfoMSFT properties/settings to use for the connection
 ****
 
@@ -373,7 +417,7 @@ include::../../../../generated/api/protos/xrRemotingDisconnectMSFT.txt[]
 .Parameter Descriptions
 ****
 * pname:instance is the handle of the instance from which to get the information
-* pname:systemId is the slink:XrSystemId of the current system 
+* pname:systemId is the basetype:XrSystemId of the current system 
 * pname:disconnectInfo is the slink:XrRemotingDisconnectInfoMSFT settings to use while closing current connection
 ****
 
@@ -382,7 +426,7 @@ include::../../../../generated/validity/protos/xrRemotingDisconnectMSFT.txt[]
 
 *Returns the current connection state*
 
-[open,refpage='xrRemotingGetConnectionStateMSFT',type='protos',desc='Returns the current connection state',xrefs='XrRemotingConnectionStateMSFT, XrRemotingDisconnectReasonMSFT']
+[open,refpage='xrRemotingGetConnectionStateMSFT',type='protos',desc='Returns the current connection state',xrefs='XrRemotingConnectionStateMSFT XrRemotingDisconnectReasonMSFT']
 --
 
 include::../../../../generated/api/protos/xrRemotingGetConnectionStateMSFT.txt[]
@@ -390,7 +434,7 @@ include::../../../../generated/api/protos/xrRemotingGetConnectionStateMSFT.txt[]
 .Parameter Descriptions
 ****
 * pname:instance is the handle of the instance from which to get the information
-* pname:systemId is the slink:XrSystemId of the current system 
+* pname:systemId is the basetype:XrSystemId of the current system 
 * pname:connectionState is the current connection state elink:XrRemotingConnectionStateMSFT
 * pname:lastDisconnectReason is the last elink:XrRemotingDisconnectReasonMSFT
 ****
@@ -408,7 +452,7 @@ include::../../../../generated/api/protos/xrRemotingSetSecureConnectionClientCal
 .Parameter Descriptions
 ****
 * pname:instance is the handle of the instance from which to get the information
-* pname:systemId is the slink:XrSystemId of the current system 
+* pname:systemId is the basetype:XrSystemId of the current system 
 * pname:secureConnectionClientCallbacks is the callback interfaces that needs to be passed for the client network context
 ****
 
@@ -425,7 +469,7 @@ include::../../../../generated/api/protos/xrRemotingSetSecureConnectionServerCal
 .Parameter Descriptions
 ****
 * pname:instance is the handle of the instance from which to get the information
-* pname:systemId is the slink:XrSystemId of the current system 
+* pname:systemId is the basetype:XrSystemId of the current system 
 * pname:secureConnectionServerCallbacks is the callback interfaces that needs to be passed for the server network context
 ****
 
@@ -534,10 +578,10 @@ include::../../../../generated/api/enums/XrRemotingVideoCodecMSFT.txt[]
 
 .Enumerant Descriptions
 ****
-* ename:XR_REMOTING_VIDEO_CODEC_ANY represents HEVC video codec preferred,
+* ename:XR_REMOTING_VIDEO_CODEC_ANY_MSFT represents HEVC video codec preferred,
   fall back to H264 if HEVC is not supported by all participants.
-* ename:XR_REMOTING_VIDEO_CODEC_H264 represents H264 video codec.
-* ename:XR_REMOTING_VIDEO_CODEC_H265 represents HEVC video codec.
+* ename:XR_REMOTING_VIDEO_CODEC_H264_MSFT represents H264 video codec.
+* ename:XR_REMOTING_VIDEO_CODEC_H265_MSFT represents HEVC video codec.
 ****
 
 --
@@ -545,17 +589,17 @@ include::../../../../generated/api/enums/XrRemotingVideoCodecMSFT.txt[]
 [open,refpage='XrRemotingCertificateNameMismatchMSFT',type='enums',desc='Describes whether the name of the host presenting the certificate does not match the certificate subject',xrefs='']
 --
 The elink:XrRemotingCertificateNameMismatchMSFT describes whether the name of the host presenting the certificate does not match the certificate subject 
-or if the the name match cannot be reliably determined.
+or if the name match cannot be reliably determined.
 
 include::../../../../generated/api/enums/XrRemotingCertificateNameMismatchMSFT.txt[]
 
 .Enumerant Descriptions
 ****
-* ename:XR_REMOTING_CERTIFICATE_NAME_NOT_CHECKED represents that the
+* ename:XR_REMOTING_CERTIFICATE_NAME_MISMATCH_NOT_CHECKED_MSFT represents that the
   name match cannot be reliably determined.
-* ename:XR_REMOTING_CERTIFICATE_NAME_MATCH represents the name of the 
+* ename:XR_REMOTING_CERTIFICATE_NAME_MISMATCH_MATCH_MSFT represents the name of the 
   host presenting the certificate matches the certificate subject.
-* ename:XR_REMOTING_CERTIFICATE_NAME_MISMATCH represents the name of the 
+* ename:XR_REMOTING_CERTIFICATE_NAME_MISMATCH_MISMATCH_MSFT represents the name of the 
   host presenting the certificate does not match the certificate subject.
 ****
 

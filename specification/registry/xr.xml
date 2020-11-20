@@ -1336,7 +1336,7 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
         <!-- XR_MSFT_remoting -->
         <type name="XrRemotingDisconnectReasonMSFT" category="enum"/>
         <type name="XrRemotingConnectionStateMSFT" category="enum"/>
-        <type name="XrRemotingPreferredVideoCodecMSFT" category="enum"/>
+        <type name="XrRemotingVideoCodecMSFT" category="enum"/>
         <type name="XrRemotingCertificateNameMismatchMSFT" category="enum"/>
 
         <type category="struct" name="XrRemotingRemoteContextPropertiesMSFT">
@@ -1889,14 +1889,14 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
         <enum value="2" name="XR_REMOTING_CONNECTION_STATE_CONNECTED_MSFT"/>
     </enums>
     <enums name="XrRemotingVideoCodecMSFT" type="enum">
-        <enum value="0" name="XR_REMOTING_VIDEO_CODEC_ANY"/>
-        <enum value="1" name="XR_REMOTING_VIDEO_CODEC_H264"/>
-        <enum value="2" name="XR_REMOTING_VIDEO_CODEC_H265"/>
+        <enum value="0" name="XR_REMOTING_VIDEO_CODEC_ANY_MSFT"/>
+        <enum value="1" name="XR_REMOTING_VIDEO_CODEC_H264_MSFT"/>
+        <enum value="2" name="XR_REMOTING_VIDEO_CODEC_H265_MSFT"/>
     </enums>
     <enums name="XrRemotingCertificateNameMismatchMSFT" type="enum">
-        <enum value="0" name="XR_REMOTING_CERTIFICATE_NAME_NOT_CHECKED"/>
-        <enum value="1" name="XR_REMOTING_CERTIFICATE_NAME_MATCH"/>
-        <enum value="2" name="XR_REMOTING_CERTIFICATE_NAME_MISMATCH"/>
+        <enum value="0" name="XR_REMOTING_CERTIFICATE_NAME_MISMATCH_NOT_CHECKED_MSFT"/>
+        <enum value="1" name="XR_REMOTING_CERTIFICATE_NAME_MISMATCH_MATCH_MSFT"/>
+        <enum value="2" name="XR_REMOTING_CERTIFICATE_NAME_MISMATCH_MISMATCH_MSFT"/>
     </enums>
 
     <!-- SECTION: OpenXR command definitions -->
@@ -2550,44 +2550,44 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
         </command>
       
         <!-- XR_MSFT_remoting -->
-        <command successcodes="XR_SUCCESS">
+        <command successcodes="XR_SUCCESS" errorcodes="XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SYSTEM_INVALID,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_FUNCTION_UNSUPPORTED">
             <proto><type>XrResult</type> <name>xrRemotingSetContextPropertiesMSFT</name></proto>
             <param><type>XrInstance</type> <name>instance</name></param>
             <param><type>XrSystemId</type> <name>systemId</name></param>
             <param>const <type>XrRemotingRemoteContextPropertiesMSFT</type>* <name>contextProperties</name></param>
         </command>
-      <command successcodes="XR_SUCCESS">
+      <command successcodes="XR_SUCCESS" errorcodes="XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SYSTEM_INVALID,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_FUNCTION_UNSUPPORTED">
             <proto><type>XrResult</type> <name>xrRemotingConnectMSFT</name></proto>
             <param><type>XrInstance</type> <name>instance</name></param>
             <param><type>XrSystemId</type> <name>systemId</name></param>
             <param>const <type>XrRemotingConnectInfoMSFT</type>* <name>connectInfo</name></param>
         </command>
-      <command successcodes="XR_SUCCESS">
+      <command successcodes="XR_SUCCESS" errorcodes="XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SYSTEM_INVALID,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_FUNCTION_UNSUPPORTED">
             <proto><type>XrResult</type> <name>xrRemotingListenMSFT</name></proto>
             <param><type>XrInstance</type> <name>instance</name></param>
             <param><type>XrSystemId</type> <name>systemId</name></param>
             <param>const <type>XrRemotingListenInfoMSFT</type>* <name>listenInfo</name></param>
         </command>
-      <command successcodes="XR_SUCCESS">
+      <command successcodes="XR_SUCCESS" errorcodes="XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SYSTEM_INVALID,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_FUNCTION_UNSUPPORTED">
             <proto><type>XrResult</type> <name>xrRemotingDisconnectMSFT</name></proto>
             <param><type>XrInstance</type> <name>instance</name></param>
             <param><type>XrSystemId</type> <name>systemId</name></param>
             <param>const <type>XrRemotingDisconnectInfoMSFT</type>* <name>disconnectInfo</name></param>
         </command>
-      <command successcodes="XR_SUCCESS">
+      <command successcodes="XR_SUCCESS" errorcodes="XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SYSTEM_INVALID,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_FUNCTION_UNSUPPORTED">
             <proto><type>XrResult</type> <name>xrRemotingGetConnectionStateMSFT</name></proto>
             <param><type>XrInstance</type> <name>instance</name></param>
             <param><type>XrSystemId</type> <name>systemId</name></param>
             <param><type>XrRemotingConnectionStateMSFT</type>* <name>connectionState</name></param>
             <param><type>XrRemotingDisconnectReasonMSFT</type>* <name>lastDisconnectReason</name></param>
         </command>
-      <command successcodes="XR_SUCCESS">
+      <command successcodes="XR_SUCCESS" errorcodes="XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SYSTEM_INVALID,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_FUNCTION_UNSUPPORTED">
             <proto><type>XrResult</type> <name>xrRemotingSetSecureConnectionClientCallbacksMSFT</name></proto>
             <param><type>XrInstance</type> <name>instance</name></param>
             <param><type>XrSystemId</type> <name>systemId</name></param>
             <param>const <type>XrRemotingSecureConnectionClientCallbacksMSFT</type>* <name>secureConnectionClientCallbacks</name></param>
         </command>
-      <command successcodes="XR_SUCCESS">
+      <command successcodes="XR_SUCCESS" errorcodes="XR_ERROR_HANDLE_INVALID,XR_ERROR_INSTANCE_LOST,XR_ERROR_RUNTIME_FAILURE,XR_ERROR_SYSTEM_INVALID,XR_ERROR_VALIDATION_FAILURE,XR_ERROR_FUNCTION_UNSUPPORTED">
             <proto><type>XrResult</type> <name>xrRemotingSetSecureConnectionServerCallbacksMSFT</name></proto>
             <param><type>XrInstance</type> <name>instance</name></param>
             <param><type>XrSystemId</type> <name>systemId</name></param>
@@ -3389,13 +3389,6 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
         </require>
     </extension>
 
-    <extension name="XR_MSFT_extension_66" number="66" type="instance" supported="disabled">
-        <require>
-            <enum value="1" name="XR_MSFT_extension_66_SPEC_VERSION"/>
-            <enum value="&quot;XR_MSFT_extension_66&quot;" name="XR_MSFT_extension_66_EXTENSION_NAME"/>
-        </require>
-    </extension>
-
     <extension name="XR_MSFT_extension_67" number="67" type="instance" supported="disabled">
         <require>
             <enum value="1" name="XR_MSFT_extension_67_SPEC_VERSION"/>
@@ -3655,12 +3648,6 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
             <enum value="&quot;XR_MSFT_extension_100&quot;" name="XR_MSFT_extension_100_EXTENSION_NAME"/>
         </require>
     </extension>
-    <extension name="XR_MSFT_extension_101" number="101" type="instance" supported="disabled">
-        <require>
-            <enum value="1" name="XR_MSFT_extension_101_SPEC_VERSION"/>
-            <enum value="&quot;XR_MSFT_extension_101&quot;" name="XR_MSFT_extension_101_EXTENSION_NAME"/>
-        </require>
-    </extension>
 
     <extension name="XR_MSFT_remoting" number="66" type="instance" supported="openxr">
         <require>
@@ -3677,7 +3664,7 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
 
             <type name="XrRemotingDisconnectReasonMSFT"/>
             <type name="XrRemotingConnectionStateMSFT"/>
-            <type name="XrRemotingPreferredVideoCodecMSFT"/>
+            <type name="XrRemotingVideoCodecMSFT"/>
             <type name="XrRemotingCertificateNameMismatchMSFT"/>
           
             <type name="XrRemotingRemoteContextPropertiesMSFT"/>
@@ -3718,7 +3705,7 @@ maintained in the default branch of the Khronos OpenXR GitHub project.
         </require>
     </extension>
 
-      <extension name="XR_MSFT_remoting_frame_mirroring" number="101" type="instance" supported="openxr">
+      <extension name="XR_MSFT_remoting_frame_mirroring" number="101" type="instance" supported="openxr" protect="XR_USE_GRAPHICS_API_D3D11">
         <require>
           <enum value="1" name="XR_MSFT_remoting_frame_mirroring_SPEC_VERSION"/>
           <enum value="&quot;XR_MSFT_remoting_frame_mirroring&quot;" name="XR_MSFT_REMOTING_FRAME_MIRRORING_EXTENSION_NAME"/>
